@@ -7,7 +7,7 @@ pipeline {
             steps {
                 
                 script{
-                    git branch : 'main' , url : 'https://github.com/MEDAYDI/DevSecOpsProject.git'
+                    git branch : 'main' , url : 'https://github.com/MEDAYDI/devsecopsProject.git'
                     sh 'docker-compose up'
                 }
                 
