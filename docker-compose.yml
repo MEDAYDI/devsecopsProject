@@ -1,0 +1,65 @@
+version: "3.3"
+services:
+  mysqldb:
+    container_name: mysqlcontainerforapp
+    image: mysql:8.0
+    restart: always
+    volumes:
+      - $HOME/database:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=serverdb
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=root
+
+    networks:
+      - apinetwork
+
+  apiapplication:
+    container_name: apiapplicationcontainer
+    build: 
+      context: serverBack/
+      dockerfile: Dockerfile
+    image: mohamedaydi/serverback:v1
+    ports:
+      - 8081:8081
+    depends_on:
+      - mysqldb
+    restart: unless-stopped
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/serverdb?createDatabaseIfNotExist=true
+    networks:
+      - apinetwork
+  frontendserver:
+      container_name: frontendserver
+      depends_on:
+         - apiapplication
+         - mysqldb
+      build:
+         context: serverFront/
+         dockerfile: Dockerfile
+      image: mohamedaydi/serverfront:latest
+      ports:
+        - 4200:4200
+      restart : unless-stopped
+      networks : 
+        - apinetwork
+
+  phpmyadmin:
+    depends_on:
+      - mysqldb
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports :
+      - 8083:80
+    environment:
+      - PMA_HOST=mysqldb
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - apinetwork
+
+networks:
+  apinetwork:
+    driver: bridge
