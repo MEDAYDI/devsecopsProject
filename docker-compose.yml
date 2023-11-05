@@ -17,6 +17,21 @@ services:
     networks:
       - apinetwork
 
+  frontendserver:
+      container_name: frontendserver
+      depends_on:
+         - apiapplication
+         - mysqldb
+      build:
+         context: appFront/
+         dockerfile: Dockerfile
+      image: mohamedaydi/serverfront:latest
+      ports:
+        - 4200:4200
+      restart : unless-stopped
+      networks : 
+        - apinetwork
+
   apiapplication:
     container_name: apiapplicationcontainer
     build: 
@@ -32,20 +47,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/serverdb?createDatabaseIfNotExist=true
     networks:
       - apinetwork
-  frontendserver:
-      container_name: frontendserver
-      depends_on:
-         - apiapplication
-         - mysqldb
-      build:
-         context: appFront/
-         dockerfile: Dockerfile
-      image: mohamedaydi/serverfront:latest
-      ports:
-        - 4200:4200
-      restart : unless-stopped
-      networks : 
-        - apinetwork
+ 
 
   phpmyadmin:
     depends_on:
