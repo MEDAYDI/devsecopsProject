@@ -8,7 +8,7 @@ pipeline {
                 
                 script{
                     git branch : 'main' , url : 'https://github.com/MEDAYDI/devsecopsProject.git'
-                    sh 'docker-compose up'
+                    sh 'docker-compose create'
                 }
                 
             }
