@@ -3,7 +3,6 @@ WORKDIR /app
 COPY pom.xml /app
 RUN mvn dependency:resolve
 COPY . /app
-RUN mvn clean install -U
 RUN mvn package -DskipTests
 
 FROM openjdk:17-jdk-alpine
