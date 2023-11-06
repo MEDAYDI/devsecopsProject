@@ -12,7 +12,7 @@ pipeline {
 
         stage('Run Snyk Open Source Scan') {
             steps {
-                withCredentials([snykApiToken(credentialsId: 'organisation-snyk-api-token', variable: 'SNYK_TOKEN')]) {
+                withCredentials([usernamePassword(credentialsId: 'organisation-snyk-api-token', variable: 'SNYK_TOKEN')]) {
                     snykSecurity(
                         snykInstallation: 'snyk@latest',
                         snykTokenId: "${SNYK_TOKEN}",
@@ -27,7 +27,7 @@ pipeline {
 
         stage('Run Snyk Code Scan') {
             steps {
-                withCredentials([snykApiToken(credentialsId: 'organisation-snyk-api-token', variable: 'SNYK_TOKEN')]) {
+                withCredentials([usernamePassword(credentialsId: 'organisation-snyk-api-token', variable: 'SNYK_TOKEN')]) {
                     snykSecurity(
                         snykInstallation: 'snyk@latest',
                         snykTokenId: "${SNYK_TOKEN}",
@@ -42,7 +42,7 @@ pipeline {
 
         stage('Run Snyk Container Scan') {
             steps {
-                withCredentials([snykApiToken(credentialsId: 'organisation-snyk-api-token', variable: 'SNYK_TOKEN')]) {
+                withCredentials([usernamePassword(credentialsId: 'organisation-snyk-api-token', variable: 'SNYK_TOKEN')]) {
                     snykSecurity(
                         snykInstallation: 'snyk@latest',
                         snykTokenId: "${SNYK_TOKEN}",
