@@ -15,7 +15,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'organisation-snyk-api-token', variable: 'SNYK_TOKEN')]) {
                     snykSecurity(
                         snykInstallation: 'snyk@latest',
-                        snykToken: "${SNYK_TOKEN}",
+                        snykTokenId: "${SNYK_TOKEN}",
                         failOnIssues: false,
                         monitorProjectOnBuild: true,
                         additionalArguments: '--all-projects --d'
