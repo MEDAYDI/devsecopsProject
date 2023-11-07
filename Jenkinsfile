@@ -12,10 +12,10 @@ pipeline {
 
         stage('Run Snyk Open Source Scan') {
             steps {
-                withCredentials([SnykApiToken(credentialsId: 'organisation-snyk-api-token', variable: 'SNYK_TOKEN')]) {
+                withCredentials([string(credentialsId: 'organisation-snyk-api-token', variable: 'SNYK_TOKEN',secret: true)]) {
                     snykSecurity(
                         snykInstallation: 'snyk@latest',
-                        snykTokenId: "${SNYK_TOKEN}",
+                        snykToken: "${SNYK_TOKEN}",
                         failOnIssues: false,
                         monitorProjectOnBuild: true,
                         additionalArguments: '--all-projects --d'
@@ -27,10 +27,10 @@ pipeline {
 
         stage('Run Snyk Code Scan') {
             steps {
-                withCredentials([SnykApiToken(credentialsId: 'organisation-snyk-api-token', variable: 'SNYK_TOKEN')]) {
+                withCredentials([string(credentialsId: 'organisation-snyk-api-token', variable: 'SNYK_TOKEN',secret: true)]) {
                     snykSecurity(
                         snykInstallation: 'snyk@latest',
-                        snykTokenId: "${SNYK_TOKEN}",
+                        snykToken: "${SNYK_TOKEN}",
                         failOnIssues: false,
                         monitorProjectOnBuild: false,
                         additionalArguments: '--code -debug'
@@ -42,10 +42,10 @@ pipeline {
 
         stage('Run Snyk Container Scan') {
             steps {
-                withCredentials([SnykApiToken(credentialsId: 'organisation-snyk-api-token', variable: 'SNYK_TOKEN')]) {
+                withCredentials([string(credentialsId: 'organisation-snyk-api-token', variable: 'SNYK_TOKEN',secret: true)]) {
                     snykSecurity(
                         snykInstallation: 'snyk@latest',
-                        snykTokenId: "${SNYK_TOKEN}",
+                        snykToken: "${SNYK_TOKEN}",
                         failOnIssues: false,
                         monitorProjectOnBuild: true,
                         additionalArguments: '--container -debug'
