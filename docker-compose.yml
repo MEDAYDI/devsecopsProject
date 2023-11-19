@@ -20,7 +20,7 @@ services:
   apiapplication:
     container_name: apiapplicationcontainer
     build: 
-      context: serverBack/
+      context: appBack/
       dockerfile: Dockerfile
     image: mohamedaydi/serverback:v1
     ports:
@@ -38,7 +38,7 @@ services:
          - apiapplication
          - mysqldb
       build:
-         context: serverFront/
+         context: appFront/
          dockerfile: Dockerfile
       image: mohamedaydi/serverfront:latest
       ports:
