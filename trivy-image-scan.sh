@@ -10,7 +10,7 @@ fi
 dockerImageName="mohamedaydi/serverback:v1"
 echo "Image name: $dockerImageName"
 
-docker run --rm -v $WORKSPACE:/root/.cache/ -e TRIVY_GITHUB_TOKEN="$1" aquasec/trivy:0.17.2 -q image --exit-code 1 --severity CRITICAL --light "$dockerImageName"
+docker run --rm -v $WORKSPACE:/root/.cache/ -e TRIVY_GITHUB_TOKEN="$1" aquasec/trivy:latest  -q image --exit-code 1 --severity CRITICAL --light "$dockerImageName"
 
 exit_code=$?
 echo "Exit Code: $exit_code"
